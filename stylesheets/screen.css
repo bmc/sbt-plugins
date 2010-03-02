@@ -14,17 +14,59 @@ span.title {
 
 table.banner {
     border-bottom: 1px solid #999999;
+    width: 100%;
 }
 
-tr.linktabs {
+table.banner td.banner-image {
+    padding-left: 0;
+    padding-right: 1em;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-td.linktab {
-    border: 1px solid #999999;
+table.banner td.banner-title {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+div.linktabs {
+    float: right;
+}
+
+.linktabs {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.linktab {
+    background-color: #aaaaaa;
+    color: white;
+    border-left: 1px solid #999999;
+    border-right: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    border-top: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 0;
+    margin: 0;
     text-align: center;
+    width: auto;
 }
 
-td.linktab a {
+hr {
+    height: 1px;
+    border: 0;
+    color: #999999;
+    background-color: #999999;
+}
+
+.linktab a {
     text-decoration: none;
+    color: white;
 }
 

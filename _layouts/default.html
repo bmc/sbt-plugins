@@ -12,19 +12,17 @@
 <body>
 
 <div class="header">
-  <table class="banner" cellpadding="2" cellspacing="0" width="100%">
+  <table class="banner">
     <tr valign="bottom">
-      <td width="82"><img src="images/clapper-logo.png" width="82" height="81"/></td>
-      <td><span class="title">{{ page.title }}</span></td>
+      <td class="banner-image" width="82"><img src="images/clapper-logo.png" width="82" height="81"/></td>
+      <td class="banner-title"><span class="title">{{ page.title }}</span></td>
     </tr>
   </table>
 
-  <table cellpadding="2">
-    <tr class="linktabs">
-      <td class="linktab"><a href="http://github.com/bmc/sbt-plugins">Code</a>
-      <td class="linktab"><a href="http://maven.clapper.org/org/clapper/">Maven Repo</a>
-    </tr>
-  </table>
+  <div class="linktabs">
+    <span class="linktab"><a href="http://github.com/bmc/sbt-plugins">Code</a></span>
+    <span class="linktab"><a href="http://maven.clapper.org/org/clapper/">Maven Repo</a></span>
+  </div>
 </div>
 
 <div id="content" class="site">
