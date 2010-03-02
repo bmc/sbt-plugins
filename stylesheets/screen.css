@@ -70,3 +70,11 @@ hr {
     color: white;
 }
 
+p {
+    margin-left: 3em;
+}
+
+div#license p {
+    margin-left: 0em;
+}
+
