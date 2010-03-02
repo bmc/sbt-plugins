@@ -1,14 +1,15 @@
 #!/bin/sh
 
 page_title=`grep '^Title:' index.md | sed 's/^.*: //'`
-cat <<EOF1 >index.html
+temp=/tmp/index$$
+cat <<EOF1 >$temp
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
  
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <title>$page_title</title>
+    <title>{{ page.title }}</title>
     <link href="stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -23,9 +24,9 @@ cat <<EOF1 >index.html
       <div id="content" class="site">
 EOF1
 
-markdown index.md >>index.html
+markdown index.md >>$temp
 
-cat <<EOF2 >>index.html
+cat <<EOF2 >>$temp
       </div>
  
       <div class="push"></div>
@@ -33,4 +34,7 @@ cat <<EOF2 >>index.html
 </html>
 
 EOF2
+
+sed -e "s/{{ page.title }}/$page_title/g" <$temp >index.html
+
  
