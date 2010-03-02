@@ -58,8 +58,6 @@ Consult the the plugin's [README][md-readme] for complete details.
 [rhino]: http://www.mozilla.org/rhino/
 [markdown-blog]: http://brizzled.clapper.org/id/98
 
-<hr/>
-
 License
 -------
 
