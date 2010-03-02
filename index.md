@@ -1,6 +1,6 @@
 ---
 title: SBT Plugins
-layout: wikistyle
+layout: default
 ---
 
 # SBT Plugins
