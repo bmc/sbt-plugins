@@ -1,13 +1,10 @@
----
-title: SBT Plugins
-layout: default
----
+# SBT Plugins
 
 ## Introduction
 
 This repository contains various plugins for the [SBT][sbt] build tool. Each
 subdirectory within the repository is its own SBT project. See the `README.md`
-file in subdirectory for details on its plugin.
+file in each plugin's directory for details on the plugin.
 
 [sbt]: http://code.google.com/p/simple-build-tool/
 
@@ -60,6 +57,8 @@ Consult the the plugin's [README][md-readme] for complete details.
 [showdown]: http://attacklab.net/showdown/
 [rhino]: http://www.mozilla.org/rhino/
 [markdown-blog]: http://brizzled.clapper.org/id/98
+
+----------
 
 License
 -------
