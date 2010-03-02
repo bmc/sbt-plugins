@@ -1,6 +1,6 @@
 ---
-Title: SBT Plugins
-Layout: default
+title: SBT Plugins
+layout: default
 ---
 
 # SBT Plugins
