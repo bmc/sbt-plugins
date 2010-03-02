@@ -1,3 +1,8 @@
+---
+title: SBT Plugins
+layout: wikistyle
+---
+
 # SBT Plugins
 
 ## Introduction
