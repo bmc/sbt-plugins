@@ -1,6 +1,8 @@
 body {
     width: 80%;
     font-family: Arial, Verdana, Helvetica, sans-serif;
+    margin-left: 10em;
+    margin-right: 10em;
 }
 
 span.title {
