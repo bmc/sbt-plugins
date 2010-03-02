@@ -1,4 +1,4 @@
-body {
+.site {
     width: 80%;
-    font: Arial, Verdana, Helvetica, sans-serif;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
 }
