@@ -2,3 +2,11 @@ body {
     width: 80%;
     font-family: Arial, Verdana, Helvetica, sans-serif;
 }
+
+span.title {
+    font-size: 18pt;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+}
+
