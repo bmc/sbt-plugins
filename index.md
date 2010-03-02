@@ -3,8 +3,6 @@ title: SBT Plugins
 layout: default
 ---
 
-# SBT Plugins
-
 ## Introduction
 
 This repository contains various plugins for the [SBT][sbt] build tool. Each
