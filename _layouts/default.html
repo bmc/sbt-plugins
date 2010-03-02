@@ -2,32 +2,36 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
  
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <title>{{ page.title }}</title>
-    <link href="stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-      <table class="banner" cellpadding="2" cellspacing="0" width="100%">
-        <tr valign="bottom">
-          <td width="82"><img src="images/clapper-logo.png" width="82" height="81"/></td>
-          <td><span class="title">{{ page.title }}</span></td>
-        </tr>
-      </table>
-      <table cellpadding="2">
-        <tr class="tabs">
-          <td class="linktab"><a href="http://github.com/bmc/sbt-plugins">Code</a>
-          <td class="linktab"><a href="http://maven.clapper.org/org/clapper/">Maven Repo</a>
-        </tr>
-      </table>
-      <br clear="all"/>
-      <hr/>
-      <div id="content" class="site">
+
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>{{ page.title }}</title>
+<link href="stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<div class="header">
+  <table class="banner" cellpadding="2" cellspacing="0" width="100%">
+    <tr valign="bottom">
+      <td width="82"><img src="images/clapper-logo.png" width="82" height="81"/></td>
+      <td><span class="title">{{ page.title }}</span></td>
+    </tr>
+  </table>
+
+  <table cellpadding="2">
+    <tr class="linktabs">
+      <td class="linktab"><a href="http://github.com/bmc/sbt-plugins">Code</a>
+      <td class="linktab"><a href="http://maven.clapper.org/org/clapper/">Maven Repo</a>
+    </tr>
+  </table>
+</div>
+
+<div id="content" class="site">
  
-        {{ content }}
+{{ content }}
  
-      </div>
+</div>
  
-      <div class="push"></div>
-  </body>
+</body>
 </html>

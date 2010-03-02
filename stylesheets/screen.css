@@ -12,6 +12,10 @@ span.title {
     font-style: italic;
 }
 
+table.banner {
+    border-bottom: 1px solid #999999;
+}
+
 tr.linktabs {
 }
 
