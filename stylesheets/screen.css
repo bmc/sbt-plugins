@@ -13,13 +13,10 @@ span.title {
 }
 
 tr.linktabs {
-    background-color: #888888;
-    border: 1px solid white;
 }
 
 td.linktab {
-    background-color: #888888;
-    color: white;
+    border: 1px solid #999999;
 }
 
 td.linktab a {
