@@ -1,1 +1,108 @@
-test
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title></title>
+    <link href="stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+      <table class="banner" cellpadding="2" cellspacing="0" width="100%">
+        <tr valign="bottom">
+          <td width="82"><img src="images/clapper-logo.png" width="82" height="81"/></td>
+          <td><span class="title">{{ page.title }}</span></td>
+        </tr>
+      </table>
+      <br clear="all"/>
+      <hr/>
+      <div id="content" class="site">
+<h1>SBT Plugins</h1>
+
+<h2>Introduction</h2>
+
+<p>This repository contains various plugins for the <a href="http://code.google.com/p/simple-build-tool/">SBT</a> build tool. Each
+subdirectory within the repository is its own SBT project. See the <code>README.md</code>
+file in each plugin's directory for details on the plugin.</p>
+
+<h2>The Plugins</h2>
+
+<p>This repository currently contains the following <a href="http://code.google.com/p/simple-build-tool/">SBT</a> plugins.</p>
+
+<h3>EditSource</h3>
+
+<p>The <a href="http://github.com/bmc/sbt-plugins/tree/master/editsource/">EditSource plugin</a> provides methods that offer a similar
+substitution facility to the one available with an <a href="http://ant.apache.org/">Ant's</a>
+<code>filterset</code>. That is, it edits a source (a file, a string--anything that
+can be wrapped in a Scala <code>Source</code> object), substituting variable
+references. Variable references look like <em>@var@</em>. A map supplies values
+for the variables. Any variable that isn't found in the map is silently
+ignored.</p>
+
+<p>Consult the <a href="http://github.com/bmc/sbt-plugins/tree/master/editsource/README.md">README</a> for complete details.</p>
+
+<h3>IzPack</h3>
+
+<p>The <a href="http://github.com/bmc/sbt-plugins/tree/master/IzPack/">IzPack plugin</a> provides a method that will run the
+<a href="http://izpack.org/">IzPack</a> compiler, generating an installer jar for your application.</p>
+
+<p>Consult the <a href="http://izpack.org/">IzPack</a> web site and the plugin's <a href="http://github.com/bmc/sbt-plugins/tree/master/IzPack/README.md">README</a> 
+for complete details.</p>
+
+<h3>Markdown</h3>
+
+<p>The <a href="http://github.com/bmc/sbt-plugins/tree/master/markdown/">Markdown plugin</a> supplies methods to translate
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a> documents into HTML. The plugin uses the
+<a href="http://attacklab.net/showdown/">Showdown</a> Javascript Markdown parser and the Mozilla
+<a href="http://www.mozilla.org/rhino/">Rhino</a> Javascript engine to convert Markdown into HTML. For details
+on the approach, see the related <a href="http://brizzled.clapper.org/id/98">Parsing Markdown in Scala</a>
+blog entry.</p>
+
+<p>Consult the the plugin's <a href="http://github.com/bmc/sbt-plugins/tree/master/markdown/README.md">README</a> for complete details.</p>
+
+<h2>License</h2>
+
+<p>This plugin is released under a BSD license, adapted from
+<a href="http://opensource.org/licenses/bsd-license.php">http://opensource.org/licenses/bsd-license.php</a></p>
+
+<p>Copyright &copy; 2010, Brian M. Clapper
+All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:</p>
+
+<ul>
+<li><p>Redistributions of source code must retain the above copyright notice,
+this list of conditions and the following disclaimer.</p></li>
+<li><p>Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.</p></li>
+<li><p>Neither the names "clapper.org" nor the names of its contributors may be
+used to endorse or promote products derived from this software without
+specific prior written permission.</p></li>
+</ul>
+
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+
+<h2>Copyrights</h2>
+
+<p>These plugins are copyright &copy; 2010 Brian M. Clapper.</p>
+
+<p><a href="http://code.google.com/p/simple-build-tool/">SBT</a> is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.</p>
+      </div>
+ 
+      <div class="push"></div>
+  </body>
+</html>
+
