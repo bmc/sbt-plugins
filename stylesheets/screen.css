@@ -1,8 +1,23 @@
 body {
-    width: 80%;
+    border-left: 10em solid #eeeeee;
+    border-right: 10em solid #eeeeee;
+    background-color: #eeeeee;
+    margin: 0;
+    padding: 0;
     font-family: Arial, Verdana, Helvetica, sans-serif;
-    margin-left: 10em;
-    margin-right: 10em;
+}
+
+div.site {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+div.header {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
 }
 
 span.title {
@@ -33,6 +48,7 @@ table.banner td.banner-title {
 
 div.linktabs {
     float: right;
+    background-color: white;
 }
 
 .linktabs {
