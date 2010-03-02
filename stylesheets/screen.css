@@ -12,3 +12,17 @@ span.title {
     font-style: italic;
 }
 
+tr.linktabs {
+    background-color: #888888;
+    border: 1px solid white;
+}
+
+td.linktab {
+    background-color: #888888;
+    color: white;
+}
+
+td.linktab a {
+    text-decoration: none;
+}
+
