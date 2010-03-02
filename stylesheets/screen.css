@@ -17,6 +17,7 @@ tr.linktabs {
 
 td.linktab {
     border: 1px solid #999999;
+    text-align: center;
 }
 
 td.linktab a {
