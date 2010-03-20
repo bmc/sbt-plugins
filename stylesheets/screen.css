@@ -90,6 +90,26 @@ p {
     margin-left: 3em;
 }
 
+div.byline {
+    margin-top: 1em;
+    text-align: right;
+}
+
+span.author {
+}
+
+span.email {
+    font-style: italic;
+}
+
+ul {
+    margin-left: 3em;
+}
+
+ol {
+    margin-left: 3em;
+}
+
 div#license p {
     margin-left: 0em;
 }

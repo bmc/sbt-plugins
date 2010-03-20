@@ -25,4 +25,10 @@
     <span class="linktab"><a href="http://maven.clapper.org/org/clapper/">Maven Repo</a></span>
     <span class="linktab"><a href="http://www.clapper.org/software/">Other Software</a></span>
   </div>
+
+  {% if page.author %}
+  <br clear="all"/>
+  <div class="byline"><span class="author">{{ page.author }}</span>{% if page.email %}, <span class="email">{{ page.email }}</span>{% endif %}</div>
+  {% endif %}
+
 </div>

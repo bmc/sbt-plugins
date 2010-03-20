@@ -39,7 +39,7 @@ The [IzPack plugin][izpack-plugin] provides a method that will run the
 Consult the [IzPack][izpack] web site and the plugin's [README][izpack-readme] 
 for complete details.
 
-[izpack-plugin]: http://github.com/bmc/sbt-plugins/tree/master/IzPack/
+[izpack-plugin]: izpack.html
 [izpack-readme]: http://github.com/bmc/sbt-plugins/tree/master/IzPack/README.md
 [izpack]: http://izpack.org/
 

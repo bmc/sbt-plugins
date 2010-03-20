@@ -1,7 +1,27 @@
 #!/bin/sh
 
-page_title=`grep '^Title:' index.md | sed 's/^.*: //'`
-temp=/tmp/index$$
+case "$#" in
+    1)
+        in=$1
+        base=`basename $1 .md`
+        out=$base.html
+        ;;
+    *)
+        echo "Usage: $0 mdfile" >&2
+        exit 1
+esac
+
+if [ ! -f $in ]
+then
+    echo "No such file -- $in" >&2
+    exit 1
+fi
+
+page_title=`grep '^title:' $in | sed 's/^.*: //'`
+layout=`grep '^layout:' $in | sed 's/^.*: //'`
+layout=`grep '^author:' $in | sed 's/^.*: //'`
+email=`grep '^email:' $in | sed 's/^.*: //'`
+temp=/tmp/$base$$
 cat <<EOF1 >$temp
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -24,7 +44,14 @@ cat <<EOF1 >$temp
       <div id="content" class="site">
 EOF1
 
-markdown index.md >>$temp
+temp2=/tmp/${base}2$$
+awk '
+BEGIN    {suppress = 0}
+/^---/   {suppress += 1; if (suppress <= 2) next;}
+         {if (suppress > 1) print $0}' <$in >$temp2
+
+markdown $temp2 >>$temp
+rm -f $temp2
 
 cat <<EOF2 >>$temp
       </div>
@@ -35,6 +62,9 @@ cat <<EOF2 >>$temp
 
 EOF2
 
-sed -e "s/{{ page.title }}/$page_title/g" <$temp >index.html
+sed -e "s/{{ page.title }}/$page_title/g" \
+    -e "s/{{ page.author }}/$author/g" \
+<$temp >$out
+rm -f $temp
 
  
