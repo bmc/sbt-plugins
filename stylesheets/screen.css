@@ -7,6 +7,35 @@ body {
     font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 
+h2
+{
+    background-color: #aaaaaa;
+    border: 1px solid black;
+}
+
+h3
+{
+    background-color: #dddddd;
+    border: 1px solid black;
+}
+
+h4
+{ 
+    font-style: italic;
+}
+
+h5
+{ 
+    font-style: italic;
+    text-decoration: underline;
+}
+
+h6
+{ 
+    font-style: italic;
+    text-decoration: underline;
+}
+
 div.site {
     margin-left: 10px;
     margin-right: 10px;
@@ -87,7 +116,6 @@ hr {
 }
 
 p {
-    margin-left: 3em;
 }
 
 div.byline {
@@ -102,12 +130,18 @@ span.email {
     font-style: italic;
 }
 
-ul {
+pre {
     margin-left: 3em;
+    background-color: #e0e0e0;
+    padding: 10px;
+    width: auto;
+}
+
+
+ul {
 }
 
 ol {
-    margin-left: 3em;
 }
 
 div#license p {

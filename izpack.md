@@ -91,7 +91,290 @@ XML necessary for IzPack. This second approach provides several benefits:
 * You have the full power of Scala at your command, for making build-time
   decisions.
 
-### _more coming_
+## Getting the plugin
+
+In your SBT project, create a `project/plugins/Plugins.scala` file, if you
+haven't done so already. Then, add the following lines, to make the plugin
+available to your project:
+
+    val orgClapperRepo = "clapper.org Maven Repo" at "http://maven.clapper.org"
+    val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.1.2"
+
+Replace the version number with the most recent version number of the
+published plugin.
+
+You can also use the development version of the plugin, by cloning the
+[GitHub repository][github-repo] repository and running an `sbt
+publish-local` on it. The following commands are Unix-specific; make
+appropriate adjustments for Windows.
+
+    $ git clone http://github.com/bmc/sbt-plugins.git
+    $ cd sbt-plugins/izpack
+    $ sbt update publish-local
+
+[github-repo]: http://github.com/bmc/sbt-plugins
+
+## Mixing it into your project
+
+This part's easy: Just mix it in:
+
+    import sbt._
+    
+    class MyProject(info: ProjectInfo)
+    extends DefaultProject(info) with IzPackPlugin
+
+At that point, your project has access to the methods provided by the plugin.
+
+## Using an Existing IzPack Installation File
+
+If you already have an existing, external IzPack configuration file, you're
+pretty much almost done. You just have to create an SBT task to run IzPack
+on your file. Here's an example:
+
+    class MyProject(info: ProjectInfo)
+    extends DefaultProject(info) with IzPackPlugin {
+
+        lazy val installer = task {installerAction; None}
+                             .dependsOn(packageAction, docAction)
+                             .describedAs("Build installer.")
+
+        private def installerAction = {
+            val installFile = "src" / "main" / "izpack" / "install.xml"
+            val installJar = projectName.value.toString.toLowerCase + "-" +
+                             projectVersion.value.toString + "-install.jar"
+            izpackMakeInstaller(installFile, installJar)
+        }
+    }
+
+The `installerAction` method uses SBT's `Path` capabilities to build paths
+to the installation configuration file and the target installer jar file,
+and then invokes the plugin's `izpackMakeInstaller` method to make the
+installer jar. The rest is just SBT task boilerplate.
+
+## Building your configuration entirely in SBT
+
+If you don't have an existing IzPack configuration file, you can choose to
+build your configuration entire within your Scala SBT project file, using
+Scala code, rather than XML.
+
+### Features
+
+* Build your configuration (almost) entirely in Scala.
+* For those features not yet supported (such as `condition` sections),
+  you can supply the raw XML yourself directly in your SBT Scala build file.
+* The layout of the configuration object mirrors the layout of the
+  IzPack XML file, for the most part.
+* You can use the powerful SBT `Path` capability to find your files.
+
+### Restrictions
+
+* The `IzPackConfig` class does not support every single IzPack feature,
+  though most (hopefully all) of the most common ones are supported. If there's
+  an unsupported IzPack feature you need, you can supply the XML for it
+  manually, within your SBT Scala build file.
+
+### Let's start with an example
+
+Before explaining each configuration section, let's start with a simple 
+example. We'll tear into the example, section by section, further down.
+
+
+    lazy val installConfig = new IzPackConfig("target" / "install", log)
+    {
+        val InstallSrcDir = mainSourcePath / "izpack"
+        val TargetDocDir = "target" / "doc"
+        val LicenseHTML = TargetDocDir / "LICENSE.html"
+        val ReadmeHTML = TargetDocDir / "README.html"
+
+        new Info
+        {
+            appName = projectName.value.toString
+            appVersion = projectVersion.value.toString
+            author("Tina Gheek", "tina@example.org")
+            author("James Class", "jimclass@example.org")
+            url = "http://supertool.example.org/"
+            javaVersion = "1.6"
+            writeInstallationInfo = true
+        }
+
+        languages = List("eng", "chn", "deu", "fra", "jpn", "spa", "rus")
+
+        new Resources
+        {
+            new Resource
+            {
+                id = "HTMLLicencePanel.licence"
+                source = LicenseHTML
+            }
+
+            new Resource
+            {
+                id = "HTMLInfoPanel.info"
+                source = ReadmeHTML
+            }
+
+            new Resource
+            {
+                id = "Installer.image"
+                source = InstallSrcDir / "supertool-logo.png"
+            }
+
+            new Resource
+            {
+                id = "XInfoPanel.info"
+                source = InstallSrcDir / "final_screen.txt"
+            }
+
+            new InstallDirectory
+            {
+                """C:\Program Files\SuperTool""" on Windows
+                "/Applications/SuperTool on MacOSX
+                "/usr/local/supertool" on Unix
+            }
+        }
+        new Packaging
+        {
+            packager = Packager.SingleVolume
+        }
+
+        new GuiPrefs
+        {
+            height = 768
+            width = 1024
+
+            new LookAndFeel("looks")
+            {
+                onlyFor(Windows)
+                params = Map("variant" -> "extwin")
+            }
+
+            new LookAndFeel("looks")
+            {
+                onlyFor(Unix)
+            }
+        }
+
+        new Panels
+        {
+            new Panel("HelloPanel")
+            new Panel("HTMLInfoPanel")
+            new Panel("HTMLLicencePanel")
+            new Panel("TargetPanel")
+            new Panel("PacksPanel")
+            new Panel("InstallPanel")
+            new Panel("XInfoPanel")
+            new Panel("FinishPanel")
+        }
+
+        new Packs
+        {
+            new Pack("Core")
+            {
+                required = true
+                preselected = true
+                description = "The SuperTool jar file, binaries, and " +
+                              "dependent jars"
+
+                new SingleFile(LicenseHTML, "$INSTALL_PATH/LICENSE.html")
+                new SingleFile(ReadmeHTML, "$INSTALL_PATH/README.html")
+
+                new SingleFile(InstallSrcDir / "supertool.sh",
+                               "$INSTALL_PATH/bin/supertool")
+                {
+                    onlyFor(Unix, MacOSX)
+                }
+
+                new Parsable("$INSTALL_PATH/bin/supertool")
+                {
+                    onlyFor(Unix, MacOSX)
+                }
+
+                new Executable("$INSTALL_PATH/bin/supertool")
+                {
+                    onlyFor(Unix, MacOSX)
+                }
+
+                new SingleFile(InstallSrcDir / "supertool.bat",
+                               "$INSTALL_PATH/bin/supertool.bat")
+                {
+                    onlyFor(Windows)
+                }
+
+                new Parsable("$INSTALL_PATH/bin/supertool.bat")
+                {
+                    onlyFor(Windows)
+                }
+
+                new Executable("$INSTALL_PATH/bin/supertool.bat")
+                {
+                    onlyFor(Windows)
+                }
+
+                new SingleFile(InstallSrcDir / "sample.cfg",
+                               "$INSTALL_PATH/sample.cfg")
+
+                new SingleFile(jarPath, "$INSTALL_PATH/lib/supertool.jar")
+
+                // Get the list of jar files to include, besides the
+                // project's jar. Note to self: "**" means "recursive drill
+                // down". "*" means "immediate descendent".
+
+                val projectBootDir = "project" / "boot" / scalaVersionDir
+                val jars = 
+                    (("lib" +++ "lib_managed") **
+                     ("*.jar" - "izpack*.jar"
+                              - "scalatest*.jar"
+                              - "scala-library*.jar"
+                              - "scala-compiler.jar")) +++
+                     (projectBootDir ** "scala-library.jar")
+
+                new FileSet(jars, "$INSTALL_PATH/lib")
+            }
+
+            new Pack("Documentation")
+            {
+                required = false
+                preselected = true
+                description = "The SuperTool User's Guide and other docs"
+
+                new FileSet((TargetDocDir * "*.html") +++
+                            (TargetDocDir * "*.js") +++
+                            (TargetDocDir * "*.md") +++
+                            (TargetDocDir * "*.css") +++
+                            (TargetDocDir * "FAQ"),
+                            "$INSTALL_PATH/docs")
+                new File(path("CHANGELOG"), "$INSTALL_PATH/docs")
+            }
+        }
+    }
+
+## The Main Section
+
+_TBD_
+
+## The Info Section
+
+_TBD_
+
+## Language Packs
+
+_TBD_
+
+## The Resources Section
+
+_TBD_
+
+## The GuiPrefs section
+
+_TBD_
+
+## The Panels section
+
+_TBD_
+
+## The Packs section
+
+_TBD_
 
 ## Copyrights
 
