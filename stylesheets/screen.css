@@ -86,7 +86,7 @@ h3
 
 h4
 { 
-    text-decoration: underline;
+    border: 1px solid #dddddd;
     padding-left: 1em;
     padding-right: 1em;
 }

@@ -400,7 +400,14 @@ to define the `Info` section, you just create an `Info` object:
 ### The Info Section
 
 The `Info` class corresponds to the XML `info` section, and it shares similar
-terminology. It supports the following settings.
+terminology. You create an `Info` object inline, as follows:
+
+    new Info
+    {
+        ...
+    }
+
+`Info` supports the following settings.
 
 #### `appName`
 
@@ -410,6 +417,18 @@ terminology. It supports the following settings.
 > of hardcoding a constant string, consider using the SBT-provided
 > `projectName.value.toString` value, which takes the project's name from
 > the `project.name` value in the `project/build.properties` file.
+>
+> Required.
+
+#### `appSubpath`
+
+    appSubpath = "SuperTool"
+
+> The subpath for the default installation path. The IzPack compiler will
+> perform variable substitution and slash-backslash conversion on this
+> value.
+>
+> Optional. Default: `appName`
 
 #### `appVersion`
 
@@ -419,22 +438,8 @@ terminology. It supports the following settings.
 > Instead of hardcoding a constant string, consider using the SBT-provided
 > `projectVersion.value.toString` value, which takes the project's name
 > from the `project.version` value in the `project/build.properties` file.
-
-
-#### `appSubpath`
-
-    appSubpath = "SuperTool"
-
-> The subpath for the default installation path. The IzPack compiler will
-> perform variable substitution and slash-backslash conversion on this
-> value. If this value is not defined, the application name will be used
-> instead.
-
-#### `url`
-
-    url = "http://supertool.example.org/"
-
-> The website URL for the application. Optional.
+>
+> Optional. No default.
 
 #### `author`
 
@@ -445,38 +450,18 @@ terminology. It supports the following settings.
 > parameter is the author's name, and the second is the author's email
 > address. If an author has no email address, that parameter can be omitted.
 > Each invocation of `author()` adds an author to the list of authors.
-
-#### `javaVersion`
-
-    javaVersion = "1.6"
-    
-> The minimum Java version required to install and run the program. Values
-> can be "1.2", "1.3", etc., and are compared against the value of the
-> `java.version` System property on the install machine.
-
-#### `webDir`
-
-    webDir = "http://www.example.org/software/SoftTool/1.0"
-    
-> Causes a web installer to be created, and specifies the URL from which
-> packages are to be retrieved at installation time.
 >
-> Default: a web installer is *not* created
-
-#### `requiresJDK`
-
-    requiresJDK = false
-    
-> Whether or not a JDK is required at runtime (as opposed to a JRE).
->
-> Default value: `false`.
+> Optional. No default.
 
 #### `createUninstaller`
 
     createUninstaller = true
     
-> Whether or not to create an uninstaller jar at installation time. Defaults
-> to `true`. NOTE: This setting is less powerful than the corresponding setting
+> Whether or not to create an uninstaller jar at installation time.
+>
+> Optional. Default: `true`
+>
+> NOTE: This setting is less powerful than the corresponding setting
 > in the IzPack XML configuration. If you need access to all the capabilities
 > of the underlying `uninstaller` XML element, use custom XML. For example:
 
@@ -485,6 +470,16 @@ terminology. It supports the following settings.
 > See [Custom XML][] for more information.
 
 [Custom XML]: #custom_xml
+
+#### `javaVersion`
+
+    javaVersion = "1.6"
+    
+> The minimum Java version required to install and run the program. Values
+> can be "1.2", "1.3", etc., and are compared against the value of the
+> `java.version` System property on the install machine.
+>
+> Optional. No default.
 
 #### `pack200`
 
@@ -497,18 +492,147 @@ terminology. It supports the following settings.
 > results in significantly smaller installer files. See the
 > [IzPack documentation][izpack-info-section] for more details.
 >
-> Default value: `false`
+> Optional. Default: `false`
 
 [Pack200]: http://java.sun.com/j2se/1.5.0/docs/guide/deployment/deployment-guide/pack200.html
 [izpack-info-section]: http://izpack.org/documentation/installation-files.html#the-information-element-info
 
+#### `requiresJDK`
+
+    requiresJDK = false
+    
+> Whether or not a JDK is required at runtime (as opposed to a JRE).
+>
+> Optional. Default: `false`.
+
+#### `runPrivileged`
+
+    runPrivileged = false
+
+> Whether or not to attempt privilege escalation.
+>
+> Optional. Default: `false`
+>
+> NOTE: This setting is less powerful than the corresponding setting
+> in the IzPack XML configuration. If you need access to all the capabilities
+> of the underlying `runprivileged` XML element, use custom XML. For example:
+
+    customXML = <runprivileged condition="ifwindows"/>
+
+> See [Custom XML][] for more information.
+
+#### `summaryLogFilePath`
+
+    summaryLogFilePath = "$INSTALL_PATH/log.html"
+
+> Specifies the path of the logfile for IzPack's 
+> `SummaryLoggerInstallerListener`.
+>
+> Optional. No default.
+
+#### `url`
+
+    url = "http://supertool.example.org/"
+
+> The website URL for the application.
+>
+> Optional. No default.
+
+#### `webDir`
+
+    webDir = "http://www.example.org/software/SoftTool/1.0"
+    
+> Causes a web installer to be created, and specifies the URL from which
+> packages are to be retrieved at installation time.
+>
+> Optional. Default: a web installer is *not* created
+
+#### `writeInstallationInfo`
+
+    writeInstallationInfo = true
+
+> Specifies whether or not the file `.installinformation` should be written,
+> which includes the information about installed packs.
+>
+> Optional. Default: `true`
+
 ### Language Packs
 
-_TBD_
+Unlike the IzPack XML format, there's no special `locale` object in the
+`IzPackConfig` class. Instead, language packs are simply specified as a
+Scala list of strings, each element of which is an [ISO3 country code][].
+
+For example:
+
+    languages = List("eng", "chn", "deu", "fra", "jpn", "spa", "rus")
+
+[ISO3 country code]: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+
+### The Packaging Section
+
+The `Packaging` class corresponds to the XML `packaging` section, and it
+shares similar terminology.  You create a `Packaging` object inline, within
+the `IzPackConfig` object:
+
+    new Packaging
+    {
+        ...
+    }
+
+If this setting is omitted, a single-volume installer is created.
+
+`Packaging` supports the following settings.
+
+#### `packager`
+
+    import Packager._
+
+    packager = Packager.SingleVolume
+
+> The `packager` variable can be set to either `Packager.SingleVolume` or
+> `Packager.MultiVolume`; these values correspond exactly to their IzPack
+> XML counterparts. You *must* import the `Packager` submodule, as shown
+> below, to set this value.
+
+#### `volumeSize`
+
+    volumeSize = 1024*1024*1024
+
+> Ignored unless `packager` is set to `Packager.MultiVolume`, this variable
+> sets the size, in bytes, of each volume of a multivolume installer. It
+> corresponds to the IzPack XML `volumesize` option.
+>
+> Optional. Default: None
+
+#### `firstVolFreeSpace`
+
+    firstVolFreeSpace = 1024*1024
+
+> Ignored unless `packager` is set to `Packager.MultiVolume`, this variable
+> sets the size, in bytes, of the free space to leave on the first volume of
+> a multivolume installer. It corresponds to the IzPack XML
+> `firstvolumefreespace` option.
+>
+> Optional. Default: None
 
 ### The Resources Section
 
-_TBD_
+The `Resources` class corresponds to the XML `resources` section, and it
+shares similar terminology. You create a `Resources` object inline, within
+the `IzPackConfig` object:
+
+    new Resources
+    {
+        ...
+    }
+
+`Resources` supports the following settings.
+
+#### `appName`
+
+    appName = "My Application Name"
+
+> The application name. Corresponds to the XML `appname` element. Instead
 
 ### The GuiPrefs section
 
