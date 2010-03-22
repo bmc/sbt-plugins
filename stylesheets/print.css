@@ -1,102 +1,30 @@
 body
 {
-    border-left: 5em solid #eeeeee;
-    border-right: 5em solid #eeeeee;
-    background-color: #eeeeee;
+    border-left: 5em;
+    border-right: 5em;
+    background-color: white;
     margin: 0;
     padding: 0;
     font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 
-/* --- START table of contents styling. See toc.js */
-
-div#tocBlock
-{
-    border: 1px solid black;
-    background-color: #f0f0f0;
-    padding: 10px;
-    width: 40%;
-    float: right;
-}
-
-div#toc
-{
-    width: auto;
-}
-
-span#tocHeading
-{
-    background-color: #f0f0f0;
-    width: auto;
-    font-weight: bold;
-    font-size: larger;
-}
-
-ul.toc
-{
-}
-
-li.tocH1
-{
-    margin-left: 0em
-}
-
-li.tocH2
-{ 
-    margin-left: 1em
-}
-
-li.tocH3
-{ 
-    margin-left: 2em
-}
-
-li.tocH4
-{ 
-    margin-left: 3em
-}
-
-li.tocH5
-{
-    margin-left: 4em
-}
-
-li.tocH6
-{
-    margin-left: 5em
-}
-
-/* --- END table of contents styles */
-
 h2
 {
-    background-color: #aaaaaa;
-    border: 1px solid black;
-    padding-left: 1em;
-    padding-right: 1em;
 }
 
 h3
 {
-    background-color: #dddddd;
-    border: 1px solid black;
-    padding-left: 1em;
-    padding-right: 1em;
 }
 
 h4
 { 
     text-decoration: underline;
-    padding-left: 1em;
-    padding-right: 1em;
 }
 
 h5
 { 
     font-style: italic;
     text-decoration: underline;
-    padding-left: 1em;
-    padding-right: 1em;
 }
 
 h6
@@ -104,8 +32,6 @@ h6
     font-style: italic;
     font-weight: normal;
     text-decoration: underline;
-    padding-left: 1em;
-    padding-right: 1em;
 }
 
 div.site
@@ -133,7 +59,6 @@ span.title
 
 table.banner
 {
-    border-bottom: 1px solid #999999;
     width: 100%;
 }
 
@@ -205,7 +130,6 @@ p
 div.byline
 {
     margin-top: 1em;
-    margin-right: 1em;
     text-align: right;
 }
 

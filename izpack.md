@@ -1,26 +1,26 @@
 ---
 title: The IzPack SBT Plugin
-layout: default
+layout: withTOC
 author: Brian M. Clapper
 email: bmc@clapper.org
 ---
 
 ## Introduction
 
-The [IzPack][izpack] SBT Plugin is a plugin for the [Scala][scala]-based
-[SBT][sbt] build tool. IzPack is an open source tool that allows you to
-create flexible Java-based graphical and command-line installers. This
-plugin allows you to use IzPack from your SBT project, either
+The [IzPack][] SBT Plugin is a plugin for the [Scala][]-based [SBT][] build
+tool. IzPack is an open source tool that allows you to create flexible
+Java-based graphical and command-line installers. This plugin allows you to
+use IzPack from your SBT project, either
 
-* via a traditional [IzPack XML installation file][izpack-install-file], or
-* by building a Scala-based IzPack configuration object.
+* via a traditional [IzPack XML installation file][], or by building a
+* Scala-based IzPack configuration object.
 
 This document explains how to use the plugin.
 
-[sbt]: http://code.google.com/p/simple-built-tool/
-[izpack]: http://izpack.org/
-[izpack-install-file]: http://izpack.org/documentation/installation-files.html
-[scala]: http://www.scala-lang.org/
+[SBT]: http://code.google.com/p/simple-build-tool/
+[Izpack]: http://izpack.org/
+[IzPack XML installation file]: http://izpack.org/documentation/installation-files.html
+[Scala]: http://www.scala-lang.org/
 
 ## Motivation
 
@@ -38,13 +38,12 @@ IzPack uses a complex XML configuration file.
 
 I dislike the whole trend of using XML as a configuration file format. Yes,
 XML is ostensibly human-readable. But it isn't always human-*friendly*. I
-agree with [Terence Parr][parr], author of [ANTLR][antlr] and
-[StringTemplate][stringtemplate], who wrote, in 2001, that XML is a poor
-human interface:
+agree with [Terence Parr][], author of [ANTLR][] and [StringTemplate][],
+who wrote, in 2001, that XML is a poor human interface:
 
-[parr]: http://www.cs.usfca.edu/~parrt/
-[antlr]: http://www.antlr.org/
-[stringtemplate]: http://stringtemplate.org/
+[Terence Parr]: http://www.cs.usfca.edu/~parrt/
+[ANTLR]: http://www.antlr.org/
+[StringTemplate]: http://stringtemplate.org/
 
 > XML should be a safe bet for most of your program-to-program data format
 > needs. What about programs, specifications, initialization files, and the
@@ -66,24 +65,24 @@ makes many of these same points in his 2005 article entitled,
 
 SBT is a breath of fresh air, allowing me to create succinct build files,
 while giving me full access to the power of the Scala programming language.
-In every way I can imagine, SBT is [Rake][rake] for Scala.
+In every way I can imagine, SBT is [Rake][] for Scala.
 
-[rake]: http://rake.rubyforge.org/
+[Rake]: http://rake.rubyforge.org/
 [fowler-rake]: http://martinfowler.com/articles/rake.html
 
 To provide flexibility, the IzPack XML configuration syntax permits
 variables, conditionals, and other programming language-like constructs, in
-using concepts borrowed liberally from the [Ant][ant] build tool. But, as I
+using concepts borrowed liberally from the [Ant][] build tool. But, as I
 noted above, XML is a lousy syntax for a programming language. Wouldn't it
 be nicer to be able to encode build-time programming syntax in a real
 programming language?
 
-[ant]: http://ant.apache.org/
+[Ant]: http://ant.apache.org/
 
-This [SBT][sbt] plugin strives to permit just that. With this plugin, you
-can use your existing IzPack XML files, if you want. But you can
-also code your configuration in Scala; the plugin will translate it to the
-XML necessary for IzPack. This second approach provides several benefits:
+This [SBT][] plugin strives to permit just that. With this plugin, you can
+use your existing IzPack XML files, if you want. But you can also code your
+configuration in Scala; the plugin will translate it to the XML necessary
+for IzPack. This second approach provides several benefits:
 
 * Instead of using clumsy Ant-like XML `fileset` elements to specify
   file locations, you can use SBT's powerful built-in path and
@@ -104,15 +103,15 @@ Replace the version number with the most recent version number of the
 published plugin.
 
 You can also use the development version of the plugin, by cloning the
-[GitHub repository][github-repo] repository and running an `sbt
-publish-local` on it. The following commands are Unix-specific; make
-appropriate adjustments for Windows.
+[GitHub repository][] repository and running an `sbt publish-local` on it.
+The following commands are Unix-specific; make appropriate adjustments for
+Windows.
 
     $ git clone http://github.com/bmc/sbt-plugins.git
     $ cd sbt-plugins/izpack
     $ sbt update publish-local
 
-[github-repo]: http://github.com/bmc/sbt-plugins
+[GitHub repository]: http://github.com/bmc/sbt-plugins
 
 ## Mixing it into your project
 
@@ -165,6 +164,10 @@ Scala code, rather than XML.
 * The layout of the configuration object mirrors the layout of the
   IzPack XML file, for the most part.
 * You can use the powerful SBT `Path` capability to find your files.
+* The configuration class uses terminology and names that are deliberately
+  similar to the XML elements and attributes in the IzPack XML configuration
+  file, which means you can often use the official IzPack documentation for
+  clarification.
 
 ### Restrictions
 
@@ -190,9 +193,9 @@ example. We'll tear into the example, section by section, further down.
         {
             appName = projectName.value.toString
             appVersion = projectVersion.value.toString
+            url = "http://supertool.example.org/"
             author("Tina Gheek", "tina@example.org")
             author("James Class", "jimclass@example.org")
-            url = "http://supertool.example.org/"
             javaVersion = "1.6"
             writeInstallationInfo = true
         }
@@ -348,33 +351,180 @@ example. We'll tear into the example, section by section, further down.
         }
     }
 
-## The Main Section
+### The Main Container
+
+The main container for an IzPack XML configuration is the `installation`
+element:
+
+    <installation version="1.0">
+    ...
+    </installation>
+
+When writing your IzPack configuration purely in SBT, the main container
+is an `IzPackConfig` object, typically declared as a `lazy val`:
+
+    lazy val installConfig = new IzPackConfig("target" / "install", log)
+
+The constructor takes two parameters:
+
+* The SBT `Path` object describing the directory to contain the generated
+  installation files. (The plugin will create the directory, if it doesn't
+  already exist.)
+* The SBT `Logger` object.
+
+The main configuration will contain all the other sections of your
+configuration. You are also free to put helper methods and variable
+definitions of your own within the class. The example, above, contains these
+`val` definitions:
+
+    val InstallSrcDir = mainSourcePath / "izpack"
+    val TargetDocDir = "target" / "doc"
+    val LicenseHTML = TargetDocDir / "LICENSE.html"
+    val ReadmeHTML = TargetDocDir / "README.html"
+
+Those definitions are not required by the `IzPackConfig` class; indeed, the
+base `IzPackConfig` object doesn't even know they're there. They're just a
+useful place to stash some common definitions.
+
+Except for the [language packs][], to add sections to the `IzPackConfig`,
+you simply create a new class for the corresponding section. For instance,
+to define the `Info` section, you just create an `Info` object:
+
+    new Info
+    {
+        ...
+    }
+
+[language packs]: #language_packs
+
+### The Info Section
+
+The `Info` class corresponds to the XML `info` section, and it shares similar
+terminology. It supports the following settings.
+
+#### `appName`
+
+    appName = "My Application Name"
+
+> The application name. Corresponds to the XML `appname` element. Instead
+> of hardcoding a constant string, consider using the SBT-provided
+> `projectName.value.toString` value, which takes the project's name from
+> the `project.name` value in the `project/build.properties` file.
+
+#### `appVersion`
+
+    appVersion = "1.0"
+
+> The application version. Corresponds to the XML `appversion` element.
+> Instead of hardcoding a constant string, consider using the SBT-provided
+> `projectVersion.value.toString` value, which takes the project's name
+> from the `project.version` value in the `project/build.properties` file.
+
+
+#### `appSubpath`
+
+    appSubpath = "SuperTool"
+
+> The subpath for the default installation path. The IzPack compiler will
+> perform variable substitution and slash-backslash conversion on this
+> value. If this value is not defined, the application name will be used
+> instead.
+
+#### `url`
+
+    url = "http://supertool.example.org/"
+
+> The website URL for the application. Optional.
+
+#### `author`
+
+    author("Tina Gheek", "tina@example.org")
+    author("James Class", "jimclass@example.org")
+
+> Specifies an author, or multiple authors, of the software. The first
+> parameter is the author's name, and the second is the author's email
+> address. If an author has no email address, that parameter can be omitted.
+> Each invocation of `author()` adds an author to the list of authors.
+
+#### `javaVersion`
+
+    javaVersion = "1.6"
+    
+> The minimum Java version required to install and run the program. Values
+> can be "1.2", "1.3", etc., and are compared against the value of the
+> `java.version` System property on the install machine.
+
+#### `webDir`
+
+    webDir = "http://www.example.org/software/SoftTool/1.0"
+    
+> Causes a web installer to be created, and specifies the URL from which
+> packages are to be retrieved at installation time.
+>
+> Default: a web installer is *not* created
+
+#### `requiresJDK`
+
+    requiresJDK = false
+    
+> Whether or not a JDK is required at runtime (as opposed to a JRE).
+>
+> Default value: `false`.
+
+#### `createUninstaller`
+
+    createUninstaller = true
+    
+> Whether or not to create an uninstaller jar at installation time. Defaults
+> to `true`. NOTE: This setting is less powerful than the corresponding setting
+> in the IzPack XML configuration. If you need access to all the capabilities
+> of the underlying `uninstaller` XML element, use custom XML. For example:
+
+    customXML = <uninstaller write="yes" name="remove.jar"/>
+
+> See [Custom XML][] for more information.
+
+[Custom XML]: #custom_xml
+
+#### `pack200`
+
+    pack200 = false
+
+> Setting this variable to `true` causes every jar file that you add to
+> your packs to be compressed using Pack200 (see [Pack200][]). Signed jars
+> are not compressed using Pack200, as it would invalidate the signatures.
+> This makes the compilation process a little bit longer, but it usually
+> results in significantly smaller installer files. See the
+> [IzPack documentation][izpack-info-section] for more details.
+>
+> Default value: `false`
+
+[Pack200]: http://java.sun.com/j2se/1.5.0/docs/guide/deployment/deployment-guide/pack200.html
+[izpack-info-section]: http://izpack.org/documentation/installation-files.html#the-information-element-info
+
+### Language Packs
 
 _TBD_
 
-## The Info Section
+### The Resources Section
 
 _TBD_
 
-## Language Packs
+### The GuiPrefs section
 
 _TBD_
 
-## The Resources Section
+### The Panels section
 
 _TBD_
 
-## The GuiPrefs section
+### The Packs section
 
 _TBD_
 
-## The Panels section
+### Custom XML
 
-_TBD_
-
-## The Packs section
-
-_TBD_
+### Create your "installer" task
 
 ## Copyrights
 
