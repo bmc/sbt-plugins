@@ -12,14 +12,14 @@ tool. IzPack is an open source tool that allows you to create flexible
 Java-based graphical and command-line installers. This plugin allows you to
 use IzPack from your SBT project, either
 
-* via a traditional [IzPack XML installation file][], or by building a
+* via a traditional XML [IzPack installation file][], or by building a
 * Scala-based IzPack configuration object.
 
 This document explains how to use the plugin.
 
 [SBT]: http://code.google.com/p/simple-build-tool/
 [Izpack]: http://izpack.org/
-[IzPack XML installation file]: http://izpack.org/documentation/installation-files.html
+[IzPack installation file]: http://izpack.org/documentation/installation-files.html
 [Scala]: http://www.scala-lang.org/
 
 ## Motivation
@@ -118,7 +118,7 @@ Windows.
 This part's easy: Just mix it in:
 
     import sbt._
-    
+
     class MyProject(info: ProjectInfo)
     extends DefaultProject(info) with IzPackPlugin
 
@@ -322,6 +322,7 @@ example. We'll tear into the example, section by section, further down.
                 // project's jar. Note to self: "**" means "recursive drill
                 // down". "*" means "immediate descendent".
 
+                val scalaVersionDir = "scala-" + buildScalaVersion
                 val projectBootDir = "project" / "boot" / scalaVersionDir
                 val jars = 
                     (("lib" +++ "lib_managed") **
@@ -404,14 +405,27 @@ terminology. You create an `Info` object inline, as follows:
 
     new Info
     {
-        ...
+        appName = projectName.value.toString
+        appSubpath = "org.example/" + appName
+        appVersion = projectVersion.value.toString
+        author("Tina Gheek", "tina@example.org")
+        author("James Class", "jimclass@example.org")
+        createUninstaller = true
+        javaVersion = "1.6"
+        pack200 = false
+        requiresJSK = false
+        runPrivileged = false
+        summaryLogFilePath = "$INSTALL_PATH/log.html"
+        url = "http://supertool.example.org/"
+        webDir = "http://www.example.org/software/SoftTool/1.0"
+        writeInstallationInfo = true
     }
 
 `Info` supports the following settings.
 
-#### `appName`
+* `appName`
 
-    appName = "My Application Name"
+        appName = "My Application Name"
 
 > The application name. Corresponds to the XML `appname` element. Instead
 > of hardcoding a constant string, consider using the SBT-provided
@@ -420,141 +434,141 @@ terminology. You create an `Info` object inline, as follows:
 >
 > Required.
 
-#### `appSubpath`
+* `appSubpath`
 
-    appSubpath = "SuperTool"
+        appSubpath = "SuperTool"
 
-> The subpath for the default installation path. The IzPack compiler will
-> perform variable substitution and slash-backslash conversion on this
-> value.
->
-> Optional. Default: `appName`
+  The subpath for the default installation path. The IzPack compiler will
+  perform variable substitution and slash-backslash conversion on this
+  value.
 
-#### `appVersion`
+  Optional. Default: `appName`
 
-    appVersion = "1.0"
+* `appVersion`
 
-> The application version. Corresponds to the XML `appversion` element.
-> Instead of hardcoding a constant string, consider using the SBT-provided
-> `projectVersion.value.toString` value, which takes the project's name
-> from the `project.version` value in the `project/build.properties` file.
->
-> Optional. No default.
+        appVersion = "1.0"
 
-#### `author`
+   The application version. Corresponds to the XML `appversion` element.
+   Instead of hardcoding a constant string, consider using the SBT-provided
+   `projectVersion.value.toString` value, which takes the project's name
+   from the `project.version` value in the `project/build.properties` file.
 
-    author("Tina Gheek", "tina@example.org")
-    author("James Class", "jimclass@example.org")
+   Optional. No default.
 
-> Specifies an author, or multiple authors, of the software. The first
-> parameter is the author's name, and the second is the author's email
-> address. If an author has no email address, that parameter can be omitted.
-> Each invocation of `author()` adds an author to the list of authors.
->
-> Optional. No default.
+* `author`
 
-#### `createUninstaller`
+        author("Tina Gheek", "tina@example.org")
+        author("James Class", "jimclass@example.org")
 
-    createUninstaller = true
-    
-> Whether or not to create an uninstaller jar at installation time.
->
-> Optional. Default: `true`
->
-> NOTE: This setting is less powerful than the corresponding setting
-> in the IzPack XML configuration. If you need access to all the capabilities
-> of the underlying `uninstaller` XML element, use custom XML. For example:
+   Specifies an author, or multiple authors, of the software. The first
+   parameter is the author's name, and the second is the author's email
+   address. If an author has no email address, that parameter can be omitted.
+   Each invocation of `author()` adds an author to the list of authors.
 
-    customXML = <uninstaller write="yes" name="remove.jar"/>
+   Optional. No default.
 
-> See [Custom XML][] for more information.
+* `createUninstaller`
+
+        createUninstaller = true
+
+   Whether or not to create an uninstaller jar at installation time.
+
+   Optional. Default: `true`
+
+   NOTE: This setting is less powerful than the corresponding setting
+   in the IzPack XML configuration. If you need access to all the capabilities
+   of the underlying `uninstaller` XML element, use custom XML. For example:
+
+        customXML = <uninstaller write="yes" name="remove.jar"/>
+
+   See [Custom XML][] for more information.
 
 [Custom XML]: #custom_xml
 
-#### `javaVersion`
+* `javaVersion`
 
-    javaVersion = "1.6"
-    
-> The minimum Java version required to install and run the program. Values
-> can be "1.2", "1.3", etc., and are compared against the value of the
-> `java.version` System property on the install machine.
->
-> Optional. No default.
+        javaVersion = "1.6"
 
-#### `pack200`
+   The minimum Java version required to install and run the program. Values
+   can be "1.2", "1.3", etc., and are compared against the value of the
+   `java.version` System property on the install machine.
 
-    pack200 = false
+   Optional. No default.
 
-> Setting this variable to `true` causes every jar file that you add to
-> your packs to be compressed using Pack200 (see [Pack200][]). Signed jars
-> are not compressed using Pack200, as it would invalidate the signatures.
-> This makes the compilation process a little bit longer, but it usually
-> results in significantly smaller installer files. See the
-> [IzPack documentation][izpack-info-section] for more details.
->
-> Optional. Default: `false`
+* `pack200`
+
+        pack200 = false
+
+   Setting this variable to `true` causes every jar file that you add to
+   your packs to be compressed using Pack200 (see [Pack200][]). Signed jars
+   are not compressed using Pack200, as it would invalidate the signatures.
+   This makes the compilation process a little bit longer, but it usually
+   results in significantly smaller installer files. See the
+   [IzPack documentation][izpack-info-section] for more details.
+
+   Optional. Default: `false`
 
 [Pack200]: http://java.sun.com/j2se/1.5.0/docs/guide/deployment/deployment-guide/pack200.html
 [izpack-info-section]: http://izpack.org/documentation/installation-files.html#the-information-element-info
 
-#### `requiresJDK`
+* `requiresJDK`
 
-    requiresJDK = false
-    
-> Whether or not a JDK is required at runtime (as opposed to a JRE).
->
-> Optional. Default: `false`.
+        requiresJDK = false
 
-#### `runPrivileged`
+   Whether or not a JDK is required at runtime (as opposed to a JRE).
 
-    runPrivileged = false
+   Optional. Default: `false`.
 
-> Whether or not to attempt privilege escalation.
->
-> Optional. Default: `false`
->
-> NOTE: This setting is less powerful than the corresponding setting
-> in the IzPack XML configuration. If you need access to all the capabilities
-> of the underlying `runprivileged` XML element, use custom XML. For example:
+* `runPrivileged`
 
-    customXML = <runprivileged condition="ifwindows"/>
+        runPrivileged = false
 
-> See [Custom XML][] for more information.
+   Whether or not to attempt privilege escalation.
 
-#### `summaryLogFilePath`
+   Optional. Default: `false`
 
-    summaryLogFilePath = "$INSTALL_PATH/log.html"
+   NOTE: This setting is less powerful than the corresponding setting
+   in the IzPack XML configuration. If you need access to all the capabilities
+   of the underlying `runprivileged` XML element, use custom XML. For example:
 
-> Specifies the path of the logfile for IzPack's 
-> `SummaryLoggerInstallerListener`.
->
-> Optional. No default.
+        customXML = <runprivileged condition="ifwindows"/>
 
-#### `url`
+   See [Custom XML][] for more information.
 
-    url = "http://supertool.example.org/"
+* `summaryLogFilePath`
 
-> The website URL for the application.
->
-> Optional. No default.
+        summaryLogFilePath = "$INSTALL_PATH/log.html"
 
-#### `webDir`
+   Specifies the path of the logfile for IzPack's 
+   `SummaryLoggerInstallerListener`.
 
-    webDir = "http://www.example.org/software/SoftTool/1.0"
-    
-> Causes a web installer to be created, and specifies the URL from which
-> packages are to be retrieved at installation time.
->
-> Optional. Default: a web installer is *not* created
+   Optional. No default.
 
-#### `writeInstallationInfo`
+* `url`
 
-    writeInstallationInfo = true
+        url = "http://supertool.example.org/"
 
-> Specifies whether or not the file `.installinformation` should be written,
-> which includes the information about installed packs.
->
-> Optional. Default: `true`
+   The website URL for the application.
+
+   Optional. No default.
+
+* `webDir`
+
+        webDir = "http://www.example.org/software/SoftTool/1.0"
+
+   Causes a web installer to be created, and specifies the URL from which
+   packages are to be retrieved at installation time.
+
+   Optional. Default: a web installer is *not* created
+
+* `writeInstallationInfo`
+
+        writeInstallationInfo = true
+
+   Specifies whether or not the file `.installinformation` should be written,
+   which includes the information about installed packs.
+
+   Optional. Default: `true`
 
 ### Language Packs
 
@@ -576,44 +590,46 @@ the `IzPackConfig` object:
 
     new Packaging
     {
-        ...
+        import Packager._
+
+        packager = Packager.SingleVolume
     }
 
 If this setting is omitted, a single-volume installer is created.
 
 `Packaging` supports the following settings.
 
-#### `packager`
+* `packager`
 
-    import Packager._
+        import Packager._
 
-    packager = Packager.SingleVolume
+        packager = Packager.SingleVolume
 
-> The `packager` variable can be set to either `Packager.SingleVolume` or
-> `Packager.MultiVolume`; these values correspond exactly to their IzPack
-> XML counterparts. You *must* import the `Packager` submodule, as shown
-> below, to set this value.
+   The `packager` variable can be set to either `Packager.SingleVolume` or
+   `Packager.MultiVolume`; these values correspond exactly to their IzPack
+   XML counterparts. You *must* import the `Packager` submodule, as shown
+   above, to set this value.
 
-#### `volumeSize`
+* `volumeSize`
 
-    volumeSize = 1024*1024*1024
+        volumeSize = 1024*1024*1024
 
-> Ignored unless `packager` is set to `Packager.MultiVolume`, this variable
-> sets the size, in bytes, of each volume of a multivolume installer. It
-> corresponds to the IzPack XML `volumesize` option.
->
-> Optional. Default: None
+   Ignored unless `packager` is set to `Packager.MultiVolume`, this variable
+   sets the size, in bytes, of each volume of a multivolume installer. It
+   corresponds to the IzPack XML `volumesize` option.
 
-#### `firstVolFreeSpace`
+   Optional. Default: None
 
-    firstVolFreeSpace = 1024*1024
+* `firstVolFreeSpace`
 
-> Ignored unless `packager` is set to `Packager.MultiVolume`, this variable
-> sets the size, in bytes, of the free space to leave on the first volume of
-> a multivolume installer. It corresponds to the IzPack XML
-> `firstvolumefreespace` option.
->
-> Optional. Default: None
+        firstVolFreeSpace = 1024*1024
+
+   Ignored unless `packager` is set to `Packager.MultiVolume`, this variable
+   sets the size, in bytes, of the free space to leave on the first volume of
+   a multivolume installer. It corresponds to the IzPack XML
+   `firstvolumefreespace` option.
+
+   Optional. Default: None
 
 ### The Resources Section
 
@@ -626,36 +642,429 @@ the `IzPackConfig` object:
         ...
     }
 
-`Resources` supports the following settings.
+The `Resources` object, in turn, consists of individual `Resource` objects
+and an optional `InstallDirectory` object:
 
-#### `appName`
+    new Resources
+    {
+        new Resource
+        {
+            id = "HTMLLicencePanel.licence"
+            source = "src" / "docs" / LICENSE.html"
+        }
 
-    appName = "My Application Name"
+        new Resource
+        {
+            import ParseType._
 
-> The application name. Corresponds to the XML `appname` element. Instead
+            id = "HTMLInfoPanel.info"
+            source = "src" / "docs" / "README.html"
+            parseType = ParseType.Plain
+        }
+
+        new Resource
+        {
+            id = "Installer.image"
+            source = InstallSrcDir / "supertool-logo.png"
+        }
+
+        new InstallDirectory
+        {
+            """C:\Program Files\SuperTool""" on Windows
+            "/Applications/SuperTool on MacOSX
+            "/usr/local/supertool" on Unix
+        }
+        ...
+    }
+
+
+The Resources section has no variables that it recognizes (though you can
+set your own variables, for your personal use).
+
+#### Individual Resource sections
+
+Each individual `Resource` object supports the following settings:
+
+* `source`
+
+        source = "path" / "to" / "the" / "resource" / "file"
+
+   An SBT `Path` that specifies the file that is used to create the resource.
+   
+   Required.
+
+* `id`
+
+        id = "HTMLInfoPanel.info"
+
+   An XML ID, used to refer to the panel later. Some IDs are fixed by IzPack.
+   Consult the [IzPack installation file][] documentation for details.
+   
+   Required.
+
+* `parseType`
+
+        import ParseType._
+
+        parseType = ParseType.Plain
+
+  If the resource is parsable, the `parseType` value tells IzPack what kind
+  of file it is. Legal values:
+  
+  - `ParseType.JavaProperties`: The file is a Java properties file.
+  - `ParseType.XML`: The file is XML.
+  - `ParseType.Plain`: The file is plain text.
+  - `ParseType.Java`: The file is Java source code.
+  - `ParseType.Shell`: The file is a shell script.
+  - `ParseType.Ant`: The file is an [Ant][] build file.
+  
+  The legal values are dictated by IzPack; `Scala` isn't currently one of the
+  choices.
+  
+  Optional. Default: `ParseType.Plain`
+
+### Variables
+
+The `Variables` class corresponds to the XML `variables` section and
+defines variables that will be created in the generated IzPack XML and can
+be substituted in parsable files. The section is optional, and it can contain
+multiple `variable()` calls, of this form:
+
+    variable(name, value)
+    
+The name must be a unique string. The value can be of any type; it will be
+converted to string before being written to the generated XML. For example:
+
+    new Variables
+    {
+        variable("app-version", projectVersion.value)
+        variable("released-on", new java.util.Date)
+    }
+
+### Conditions
+
+Conditions are not directly supported in the `IzPackConfig` class, but you
+can insert them via [Custom XML][].
 
 ### The GuiPrefs section
 
-_TBD_
+The `GuiPrefs` class corresponds to the XML `guiprefs` section. As with the
+other sections, you create a `GuiPrefs` object inline, within the `IzPackConfig`
+object:
+
+    new GuiPrefs
+    {
+        height = 768
+        width  = 1024
+
+        new LookAndFeel("metouia")
+        {
+            onlyFor(Unix)
+        }
+
+        new LookAndFeel("liquid")
+        {
+            onlyFor(Windows, MacOS)
+
+            params = Map("decorate.frames" -> "yes",
+                         "decorate.dialogs" -> "yes")
+        }
+    }
+
+The `GuiPrefs` class, itself, has several settings. In addition, it supports
+embedded `LookAndFeel` objects.
+
+The recognized `GuiPrefs` settings are:
+
+* `height`
+
+        height = 768
+
+   The initial window height, in pixels, of the graphical installer UI.
+   
+   Optional. Default: 600
+
+* `width`
+
+        height = 768
+
+   The initial window width, in pixels, of the graphical installer UI.
+   
+   Optional. Default: 800
+
+* `resizable`
+
+        resizable = true
+        
+   Whether the graphical installer UI window can be resized by the user.
+
+#### LookAndFeel sections
+
+With the GuiPrefs section, you may also specify `LookAndFeel` object, which
+correspond directly to `laf` sections in the generated XML. A `LookAndFeel`
+object is created with a name (the name of the look-and-feel, as recognized
+by IzPack), and it may also contain operating system restrictions and arbitrary
+parameters. In the example above:
+
+        new LookAndFeel("metouia")
+        {
+            onlyFor(Unix)
+        }
+
+specifies that the Metouia look-and-feel may be used, but only on Unix
+systems.
+
+Similarly:
+
+        new LookAndFeel("liquid")
+        {
+            onlyFor(Windows, MacOS)
+
+            params = Map("decorate.frames" -> "yes",
+                         "decorate.dialogs" -> "yes")
+        }
+
+says that the Liquid look-and-feel may be used on Windows and Mac OS X.
+It specifies two additional Liquid-specific parameters.
+
+Consult the [IzPack installation file][] documentation for details.
 
 ### The Panels section
 
-_TBD_
+The `Panels` class specifies the individual installer panels in the UI; it
+corresponds to the XML `panels` section. It consists of individual `Panel`
+objects, each of which specifies one panel.
+
+#### Individual Panel sections
+
+Each `Panel` section specifies one panel in the installer.
+
+    new Panel("HelloPanel")
+    new Panel("HTMLLicencePanel")
+    new Panel("TargetPanel")
+    new Panel("PacksPanel")
+    new Panel("InstallPanel")
+
+    new Panel("UserInputPanel")
+    {
+        id = "myuserinput"
+        condition = "pack2selected"
+    }
+
+    new Panel("FinishPanel")
+    {
+        jar = "MyFinishPanel.jar"
+    }
+
+At a minimum, the panel's class name is required, as its only parameter.
+The remaining settings are optional.
+
+* `id`
+
+  An identifier for the panel, which can be used later (e.g., for reference
+  by a user-input panel definition).
+   
+* `condition`
+
+  The ID of a condition which has to be fulfilled to show this panel.
+  (NOTE: `IzPackConfig` does not currently directly support conditions, but
+  you can define them via [Custom XML][].
+
+* `jar`
+
+  The jar file where classes for this panel can be found. This option is
+  necessary only if you're not using a standard IzPack panel.
+
 
 ### The Packs section
 
-_TBD_
+The `Packs` section defines the individual installation packs: the
+selectable categories that the user will be installing. It corresponds to
+the XML `packs` section, and it consists of one or more `Pack` sections.
 
+#### Individual Pack sections
+
+Each `Pack` section represents an installable unit. It takes several settings,
+and a series of file specifications.
+
+The settings are:
+
+* `required`
+
+  A boolean setting indicating whether or not the pack is required to be
+  installed. If it's required, it cannot be deselected.
+  
+  Optional. Default: `false`
+  
+* `preselected`
+
+  A boolean setting indicating whether or not the pack is preselected on the
+  screen. Required options are always preselected.
+  
+  Optional. Default: `false`
+  
+* `description`
+
+  A brief description of the pack's contents.
+  
+  Optional. Default: none
+  
+* `depends`
+
+  A list of other packs that must be selected for the pack to be installed.
+  For example:
+  
+        val docPack = new Pack("Docs")
+        {
+            required = false
+            preselected = false
+            description = "Documentation"
+            ...
+        }
+
+        new Pack("Doc source")
+        {
+            required = false
+            preselected = false
+            description = "Documentation Source"
+            depends = List(docPack)
+            ...
+        }
+
+  Optional. Default: empty list (i.e., no dependencies on other packs)
+
+* `hidden`
+
+  A boolean setting that indicates whether the pack is hidden or not.
+  
+  Optional. Default: `false`
+
+##### Specifying files
+
+The remainder of a `Pack` section is typically taken up with file
+specifications. There are three ways to specify files to put in the pack.
+All three use SBT's `Path` capability, rather than the underlying IzPack
+`fileset` and path primitives. Using SBT's `Path` capabilities, rather than
+relying on IzPack's, has several advantages, including:
+
+1. Readability. SBT's path semantics are *much* more readable than the
+   Ant-like file sets used in the IzPack XML files.
+2. Debugging. You can embed `print` statements or logging calls within
+   your SBT build file, to ensure that you're getting the files you think
+   you're getting.
+   
+Here are the file-selection sections:
+
+* `File`
+
+  Includes a single file in the pack, specifying both the source file
+  (as a `Path`) and the target installation directory (as a string).
+  The file will have the same name when installed as it does within the
+  source tree.
+
+        new Single("myutils.jar", "$INSTALL_PATH/lib")
+
+* `SingleFile`
+
+  Includes a single file in the pack, specifying both the source file
+  (as a `Path`) and the target installation location (as a string).
+  `SingleFile` is similar to `File`, except that it permits the file to
+  have a different name when installed.
+
+        new SingleFile(jarPath, "$INSTALL_PATH/lib/supertool.jar")
+        
+* `FileSet`
+
+  Use `FileSet` to specify multiple files, via SBT's powerful path-finder
+  semantics. The full example, above, has a good illustration of the power
+  of this class:
+
+        val projectBootDir = "project" / "boot" / "scala-" + buildScalaVersion
+        val jars = (("lib" +++ "lib_managed") **
+                    ("*.jar" - "izpack*.jar"
+                             - "scalatest*.jar"
+                             - "scala-library*.jar"
+                             - "scala-compiler.jar")) +++
+                    (projectBootDir ** "scala-library.jar")
+        new FileSet(jars, "$INSTALL_PATH/lib")
+        
+  The first `val` setting creates a `Path` value that points to the
+  directory where SBT stashes the downloaded Scala libraries.
+  
+  The second `val` uses SBT's path-finder language to get all the jars
+  in the "lib" and "lib_managed" directories, except for certain jars.
+
+  Finally, those jars are passed to a `FileSet` object, so they'll be
+  included in the generated installer.
+  
 ### Custom XML
 
-### Create your "installer" task
+There are features of IzPack that this plugin's `IzPackConfig` class does
+not support directly. If you need those features, you can usually just plug
+the XML you need right into the section where it belongs. The plugin will
+ensure that the extra, custom XML gets into the generated configuration.
+
+For example, suppose you want to define a series of conditions.
+`IzPackConfig` does not directly support conditions, but you can add them
+via a `customXML` setting:
+
+    lazy val installConfig = new IzPackConfig("target" / "install", log)
+    {
+        customXML = 
+            <conditions>
+              <condition type="variable" id="standardinstallation">
+                <name>setup.type</name>
+                <value>standard</value>
+              </condition>
+              <condition type="variable" id="expertinstallation">
+                <name>setup.type</name>
+                <value>expert</value>
+              </condition>
+              <condition type="java" id="installonwindows">
+                <java>
+                  <class>com.izforge.izpack.util.OsVersion</class>
+                  <field>IS_WINDOWS</field>
+                </java>
+                <returnvalue type="boolean">true</returnvalue>
+              </condition>
+              <condition type="and" id="standardinstallation.onwindows">
+                <condition type="ref" refid="standardinstallation"/>
+                <condition type="ref" refid="installonwindows" />
+              </condition>
+            </conditions>
+        ...
+    }
+    
+The custom XML will be inserted into the generated XML, in this case, within
+the main `installation` section (where it belongs).
+
+All section classes support the `customXML` setting.
+
+### Putting it all together
+
+Once you've defined your `IzPackConfig` object, you have to wire it into your
+SBT build by creating a task that will generate the installer. The easiest
+way to do that is to follow this boilerplate:
+
+    lazy val installer = task {buildInstaller; None}
+                         .dependsOn(packageAction, docAction)
+                         .describedAs("Build installer.")
+
+    private def buildInstaller =
+    {
+        val installerJar = projectName.value.toString.toLowerCase + "-" +
+                           projectVersion.value.toString + "-install.jar"
+        izpackMakeInstaller(installConfig, "target" / installerJar)
+    }
+
+Putting that logic in your SBT build file will expose an "installer" action,
+so that `sbt installer` will build your installer jar file.
 
 ## Copyrights
 
-These plugins are copyright &copy; 2010 Brian M. Clapper.
-
-SBT is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.
-IzPack is copyright &copy; 2001-2006 Julien Ponge.
+* The IzPack SBT plugin is copyright &copy; 2010 Brian M. Clapper.
+* SBT is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.  
+* IzPack is copyright &copy; 2001-2006 Julien Ponge.
 
 ## License
 
