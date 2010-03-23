@@ -180,7 +180,9 @@ Scala code, rather than XML.
 
 Before explaining each configuration section, let's start with a simple 
 example. We'll tear into the example, section by section, further down.
+You can also [download an example][] from the GitHub repository.
 
+[download an example]: http://github.com/bmc/sbt-plugins/blob/master/IzPack/src/testproj/project/build/Project.scala
 
     lazy val installConfig = new IzPackConfig("target" / "install", log)
     {

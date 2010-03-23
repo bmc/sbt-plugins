@@ -7,7 +7,8 @@ layout: default
 
 This repository contains various plugins for the [SBT][] build tool. Each
 subdirectory within the repository is its own SBT project. See the `README.md`
-file in each plugin's directory for details on the plugin.
+file in each plugin's directory for details on the plugin. Some, but not all,
+of the plugins have their own pages here.
 
 [SBT]: http://code.google.com/p/simple-build-tool/
 
