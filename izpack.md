@@ -97,7 +97,7 @@ haven't done so already. Then, add the following lines, to make the plugin
 available to your project:
 
     val orgClapperRepo = "clapper.org Maven Repo" at "http://maven.clapper.org"
-    val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.1.2"
+    val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.2"
 
 Replace the version number with the most recent version number of the
 published plugin.
@@ -108,7 +108,7 @@ The following commands are Unix-specific; make appropriate adjustments for
 Windows.
 
     $ git clone http://github.com/bmc/sbt-plugins.git
-    $ cd sbt-plugins/izpack
+    $ cd sbt-plugins
     $ sbt update publish-local
 
 [GitHub repository]: http://github.com/bmc/sbt-plugins
@@ -1097,8 +1097,8 @@ so that `sbt installer` will build your installer jar file.
 ## Copyrights
 
 * The IzPack SBT plugin is copyright &copy; 2010 Brian M. Clapper.
+* IzPack is copyright &copy; 2001-2008 Julien Ponge
 * SBT is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.  
-* IzPack is copyright &copy; 2001-2006 Julien Ponge.
 
 ## License
 

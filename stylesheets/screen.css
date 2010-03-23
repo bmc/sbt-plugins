@@ -1,8 +1,8 @@
 body
 {
-    border-left: 5em solid #eeeeee;
-    border-right: 5em solid #eeeeee;
-    background-color: #eeeeee;
+    border-left: 5em solid black;
+    border-right: 5em solid black;
+    background-color: black;
     margin: 0;
     padding: 0;
     font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -12,7 +12,12 @@ body
 
 div#tocBlock
 {
-    border: 1px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid #bbbbbb;
+    border-top: 2px solid #bbbbbb;
+    margin-right: -4em;
+    margin-left: 10px;
     background-color: #f0f0f0;
     padding: 10px;
     width: 40%;
