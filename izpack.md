@@ -12,8 +12,8 @@ tool. IzPack is an open source tool that allows you to create flexible
 Java-based graphical and command-line installers. This plugin allows you to
 use IzPack from your SBT project, either
 
-* via a traditional XML [IzPack installation file][], or by building a
-* Scala-based IzPack configuration object.
+* via a traditional XML [IzPack installation file][], or
+* by building a Scala-based IzPack configuration object.
 
 This document explains how to use the plugin.
 
