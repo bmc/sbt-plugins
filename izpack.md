@@ -962,7 +962,23 @@ Here are the file-selection sections:
   The file will have the same name when installed as it does within the
   source tree.
 
-        new Single("myutils.jar", "$INSTALL_PATH/lib")
+        new File("myutils.jar", "$INSTALL_PATH/lib")
+        
+  `File` supports two variables:
+  
+  - `unpack`: Whether or not the file needs to be unpacked (e.g., it's a
+    zip file). Defaults to `false`.
+  - `overwrite`: What to do if the file exists when the installer runs.
+    Legal values:
+    
+    + `Overwrite.Yes` to overwrite unconditionally
+    + `Overwrite.No` to leave the existing file alone
+    + `Overwrite.AskYes` to ask the user, with "yes" preselected
+    + `Overwrite.AskNo` to ask the user, with "no" preselected
+    + `Overwrite.Update` to overwrite unconditionally, but only if the
+      file being installed is newer than the one on disk.
+
+    To use these constants, you must import `Overwrite._`
 
 * `SingleFile`
 
@@ -996,6 +1012,22 @@ Here are the file-selection sections:
 
   Finally, those jars are passed to a `FileSet` object, so they'll be
   included in the generated installer.
+
+  `FileSet` supports two variables:
+  
+  - `unpack`: Whether or not the files need to be unpacked (e.g., it's a
+    zip file). Defaults to `false`.
+  - `overwrite`: What to do if a file exists when the installer runs.
+    Legal values:
+    
+    + `Overwrite.Yes` to overwrite unconditionally
+    + `Overwrite.No` to leave the existing file alone
+    + `Overwrite.AskYes` to ask the user, with "yes" preselected
+    + `Overwrite.AskNo` to ask the user, with "no" preselected
+    + `Overwrite.Update` to overwrite unconditionally, but only if the
+      file being installed is newer than the one on disk.
+
+    To use these constants, you must import `Overwrite._`
   
 ### Custom XML
 
