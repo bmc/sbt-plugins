@@ -1,1 +1,2 @@
 exclude: run-markdown.sh
+pygments: true

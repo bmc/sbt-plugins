@@ -1,3 +1,4 @@
+
 ---
 title: The IzPack SBT Plugin
 layout: withTOC

@@ -61,24 +61,91 @@ automatically hooks the plugin's `update` and `clean-lib` actions into your
 project; it also makes the plugin's `markdown()` method available to your
 project.
 
+### Example
+
 Here's an example:
 
     import sbt_
     import org.clapper.sbtplugins.MarkdownPlugin
 
-    class MyProject(info: ProjectInfo) extends DefaultProject with MarkdownPlugin
-    {
+    class MyProject(info: ProjectInfo)
+    extends DefaultProject with MarkdownPlugin {
         override def cleanLibAction = super.cleanAction dependsOn(markdownCleanLibAction)
         override def updateAction = super.updateAction dependsOn(markdownUpdateAction)
 
         // An "htmlDocs" action that creates an HTML file from a Markdown source.
         val usersGuideMD = "src" / "docs" / "guide.md"
         val usersGuideHTML = "target" / "doc" / "guide.html"
-        lazy val htmlDocs = fileTask(usersGuideMD from usersGuideHTML)
-        {
+        lazy val htmlDocs = fileTask(usersGuideMD from usersGuideHTML) {
             markdown(usersGuideMD, usersGuideHTML, log)
         }
     }
+
+### The `markdown` methods
+
+The plugin actually provides three `markdown()` methods.
+
+#### Simplest method
+
+The simplest `markdown()` method just translates Markdown to HTML, without
+any further customization:
+
+    def markdown(markdownSource: Path, targetHTML: Path, log: Logger): Unit
+
+This method takes the following parameters:
+
+* `markdownSource`: An SBT `Path` to a Markdown source file
+* `targetHTML`: the target HTML file, also specified by an SBT `Path`
+* `logger`: the SBT `Logger` object
+
+#### Insertion of CSS and Javascript
+
+The second method allows you to specify the location of:
+
+* a Cascading Style Sheet (CSS) file, which will be inlined
+* a Javascript file, which will be referenced via a `link` directive
+
+Both are optional. The method signature is:
+
+    def markdown(markdownSource: Path, targetHTML: Path, css: Option[Path], externalJS: Option[String], log: Logger): Unit
+
+This method takes the following parameters:
+
+* `markdownSource`: An SBT `Path` to a Markdown source file
+* `targetHTML`: the target HTML file, also specified by an SBT `Path`
+* `css`: An SBT `Path` to a CSS file to be inlined, or `None`
+* `externalJS`: The string representing the URL or path to a Javascript file
+  to be referenced (via a `link` element) in the generated HTML, or `None`
+* `logger`: the SBT `Logger` object
+
+#### Insertion of arbitrary XHTML
+
+The third method allows you to insert arbitrary XHTML nodes into the `\<head\>`
+section of the HTML document. The method signature is:
+
+    def markdown(markdownSource: Path, targetHTML: Path, extraHead: List[Node], log: Logger): Unit
+
+This method takes the following parameters:
+
+* `markdownSource`: An SBT `Path` to a Markdown source file
+* `targetHTML`: the target HTML file, also specified by an SBT `Path`
+* `extraHead`: A list of `scala.xml.Node` objects to be inserted at the end of
+   the HTML `head`, or `Nil` for none.
+* `logger`: the SBT `Logger` object
+
+Here's an example of how you might use this method:
+
+    // Inline the Javascript
+
+    import java.io.File
+
+    val jsPath = "src" / "main" / "docs" / "funcs.js"
+    val mdSource = "src" / "main" / "docs" / "users-guide.md"
+    val html = "target" / "docs" / "users-guide.html"
+
+    val js = Source.fromFile(new File(jsPath.toString)).getLines.mkString("")
+    val jsNodes = <script type="text/javascript">{js}</script>
+    markdown(mdSource, html, jsNodes :: Nil, log)
 
 ## Copyrights
 
