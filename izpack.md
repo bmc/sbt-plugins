@@ -11,9 +11,9 @@ email: bmc@clapper.org
 The [IzPack][] SBT Plugin is a plugin for the [Scala][]-based [SBT][] build
 tool. IzPack is an open source tool that allows you to create flexible
 Java-based graphical and command-line installers. This plugin allows you to
-use IzPack from your SBT project, either
+use IzPack from your SBT project, using one of the following methods:
 
-* via a traditional XML [IzPack installation file][], or
+* via a traditional XML [IzPack installation file][]
 * by building a Scala-based IzPack configuration object.
 
 This document explains how to use the plugin.
