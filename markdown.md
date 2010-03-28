@@ -69,14 +69,16 @@ Here's an example:
     import org.clapper.sbtplugins.MarkdownPlugin
 
     class MyProject(info: ProjectInfo)
-    extends DefaultProject with MarkdownPlugin {
+    extends DefaultProject with MarkdownPlugin
+    {
         override def cleanLibAction = super.cleanAction dependsOn(markdownCleanLibAction)
         override def updateAction = super.updateAction dependsOn(markdownUpdateAction)
 
         // An "htmlDocs" action that creates an HTML file from a Markdown source.
         val usersGuideMD = "src" / "docs" / "guide.md"
         val usersGuideHTML = "target" / "doc" / "guide.html"
-        lazy val htmlDocs = fileTask(usersGuideMD from usersGuideHTML) {
+        lazy val htmlDocs = fileTask(usersGuideMD from usersGuideHTML)
+        {
             markdown(usersGuideMD, usersGuideHTML, log)
         }
     }
