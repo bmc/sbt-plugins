@@ -51,10 +51,9 @@ Regardless of how you get the plugin, here's how to use it in your SBT
 project.
 
 Create a project build file in `project/build/`, if you haven't already.
-Then, ensure that the project mixes in `MarkdownPlugin`. You have to ensure
-that you hook in the Markdown plugin's `update` and `clean-lib` logic, as
-shown below. Once you've done that, you can use the plugin's
-`editSourceToFile()` and `editSourceToList()` methods.
+Then, ensure that the project mixes in `EditSourePlugin`. Once you've done
+that, you can use the plugin's `editSourceToFile()` and `editSourceToList()`
+methods.
 
 ### Example
 
