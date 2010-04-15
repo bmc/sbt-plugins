@@ -74,7 +74,7 @@ file, as shown here.
     import sbt_
     import org.clapper.sbtplugins.EditFilePlugin
 
-    class MyProject(info: ProjectInfo) extends DefaultProject with EditSourcePlugin
+    class MyProject(info: ProjectInfo) extends DefaultProject(info) with EditSourcePlugin
     {
         val installCfgSource = "src" / "installer" / "install.properties"
         val vars = Map(
