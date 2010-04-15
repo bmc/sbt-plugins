@@ -43,8 +43,6 @@ Windows.
     $ cd sbt-plugins
     $ sbt update publish-local
 
-    sbt update publish-local
-
 [GitHub repository]: http://github.com/bmc/sbt-plugins
 
 ## Using the Plugin
