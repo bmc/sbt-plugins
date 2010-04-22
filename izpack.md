@@ -1104,6 +1104,17 @@ so that `sbt installer` will build your installer jar file.
 
 This plugin is released under a [BSD license][license].
 
+## Patches
+
+I gladly accept patches from their original authors. Feel free to email
+patches to me or to fork the [GitHub repository][] and send me a pull
+request. Along with any patch you send:
+
+* Please state that the patch is your original work.
+* Please indicate that you license the work to the *clapper.org SBT
+  Plugins* project under a [BSD License][].
+
+[GitHub repository]: http://github.com/bmc/sbt-plugins
 [license]: license.html
 
 

@@ -76,7 +76,7 @@ request. Along with any patch you send:
 * Please indicate that you license the work to the *clapper.org SBT
   Plugins* project under a [BSD License][].
 
-[BSD license]: license.html
 [GitHub repository]: http://github.com/bmc/sbt-plugins
+[BSD license]: license.html
 
 
