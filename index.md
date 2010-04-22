@@ -66,6 +66,17 @@ Consult the [Markdown plugin][] page for complete details.
 
 This plugin is released under a [BSD license][].
 
+## Patches
+
+I gladly accept patches from their original authors. Feel free to email
+patches to me or to fork the [GitHub repository][] and send me a pull
+request. Along with any patch you send:
+
+* Please state that the patch is your original work.
+* Please indicate that you license the work to the *clapper.org SBT
+  Plugins* project under a [BSD License][].
+
 [BSD license]: license.html
+[GitHub repository]: http://github.com/bmc/sbt-plugins
 
 
