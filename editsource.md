@@ -53,7 +53,7 @@ project.
 Create a project build file in `project/build/`, if you haven't already.
 Then, ensure that the project mixes in `EditSourePlugin`. Once you've done
 that, you can use the plugin's `editSourceToFile()` and `editSourceToList()`
-methods.
+methods.seditSourceTo
 
 ### Example
 
@@ -87,7 +87,7 @@ file, as shown here.
         import java.io.File
         val temp = File.createTempFile("inst", "properties")
         temp.deleteOnExit
-        editSourceToFile(Source.fromFile(installCfgSource.absolutePath, temp)
+        editSourceToFile(Source.fromFile(installCfgSource.absolutePath), vars, temp)
         runInstaller(temp)
         temp.delete
 
