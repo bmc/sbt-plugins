@@ -27,7 +27,7 @@ to your SBT project:
 
     val orgClapperMavenRepo = "clapper.org Maven Repo" at "http://maven.clapper.org/"
 
-    val editsource = "org.clapper" % "sbt-editsource-plugin" % "0.2"
+    val editsource = "org.clapper" % "sbt-editsource-plugin" % "0.2.2"
 
 Replace the version number with the most recent version number of the
 published plugin.

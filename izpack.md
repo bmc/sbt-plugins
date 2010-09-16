@@ -97,7 +97,7 @@ haven't done so already. Then, add the following lines, to make the plugin
 available to your project:
 
     val orgClapperRepo = "clapper.org Maven Repo" at "http://maven.clapper.org"
-    val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.2"
+    val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.2.2"
 
 Replace the version number with the most recent version number of the
 published plugin.
