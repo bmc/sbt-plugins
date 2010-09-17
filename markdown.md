@@ -27,17 +27,22 @@ In your own project, create a `project/plugins/Plugins.scala` file (if you
 haven't already), and add the following lines, to make the project available
 to your SBT project:
 
-    val orgClapperMavenRepo = "clapper.org Maven Repo" at "http://maven.clapper.org/"
-
     val markdown = "org.clapper" % "sbt-markdown-plugin" % "0.2.2"
 
 Replace the version number with the most recent version number of the
 published plugin.
 
+**NOTE**
+
+* Prior to 0.3, you also had to specify the location of the *clapper.org*
+  Maven repository. With version 0.3, however, the plug-in is now being
+  published to the [Scala Tools Maven repository][], which SBT
+  automatically searches.
+
 ### The Development Version
 
 You can also use the development version of this plugin (that is, the
-version checked into the [GitHub repository][github-repo]), by building it
+version checked into the [GitHub repository][]), by building it
 locally.
 
 First, download the plugin's source code by cloning this repository.
@@ -47,8 +52,6 @@ First, download the plugin's source code by cloning this repository.
 Then, within the `markdown` project directory, publish it locally:
 
     sbt update publish-local
-
-[github-repo]: http://github.com/bmc/sbt-plugins
 
 ## Using the Plugin
 
@@ -169,7 +172,7 @@ request. Along with any patch you send:
   Plugins* project under a [BSD License][].
 
 [GitHub repository]: http://github.com/bmc/sbt-plugins
-
+[Scala Tools Maven repository]: http://www.scala-tools.org/repo-releases/
 [license]: license.html
 
 

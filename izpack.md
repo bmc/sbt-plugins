@@ -96,11 +96,17 @@ In your SBT project, create a `project/plugins/Plugins.scala` file, if you
 haven't done so already. Then, add the following lines, to make the plugin
 available to your project:
 
-    val orgClapperRepo = "clapper.org Maven Repo" at "http://maven.clapper.org"
     val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.2.2"
 
 Replace the version number with the most recent version number of the
 published plugin.
+
+**NOTE**
+
+* Prior to 0.3, you also had to specify the location of the *clapper.org*
+  Maven repository. With version 0.3, however, the plug-in is now being
+  published to the [Scala Tools Maven repository][], which SBT
+  automatically searches.
 
 You can also use the development version of the plugin, by cloning the
 [GitHub repository][] repository and running an `sbt publish-local` on it.
@@ -110,8 +116,6 @@ Windows.
     $ git clone http://github.com/bmc/sbt-plugins.git
     $ cd sbt-plugins
     $ sbt update publish-local
-
-[GitHub repository]: http://github.com/bmc/sbt-plugins
 
 ## Mixing it into your project
 
@@ -1116,5 +1120,4 @@ request. Along with any patch you send:
 
 [GitHub repository]: http://github.com/bmc/sbt-plugins
 [license]: license.html
-
-
+[Scala Tools Maven repository]: http://www.scala-tools.org/repo-releases/
