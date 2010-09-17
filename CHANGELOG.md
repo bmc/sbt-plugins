@@ -26,7 +26,7 @@ Version 0.2.1:
   `for` and `yield`.
 
 [IzPack plugin]: http://bmc.github.com/sbt-plugins/izpack.html
-[IzPack plugin]: http://bmc.github.com/sbt-plugins/markdown.html
+[Markdown plugin]: http://bmc.github.com/sbt-plugins/markdown.html
 
 Version 0.2:
 

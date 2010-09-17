@@ -108,7 +108,7 @@ file, as shown here.
 
 ## License
 
-This plugin is released under a [BSD license][license].
+This plugin is released under a [BSD license][].
 
 ## Patches
 
@@ -121,5 +121,5 @@ request. Along with any patch you send:
   Plugins* project under a [BSD License][].
 
 [GitHub repository]: http://github.com/bmc/sbt-plugins
-[license]: license.html
+[BSD license]: license.html
 [Scala Tools Maven repository]: http://www.scala-tools.org/repo-releases/

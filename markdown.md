@@ -159,7 +159,7 @@ Here's an example of how you might use this method:
 
 ## License
 
-This plugin is released under a [BSD license][license].
+This plugin is released under a [BSD license][].
 
 ## Patches
 
@@ -173,6 +173,6 @@ request. Along with any patch you send:
 
 [GitHub repository]: http://github.com/bmc/sbt-plugins
 [Scala Tools Maven repository]: http://www.scala-tools.org/repo-releases/
-[license]: license.html
+[BSD license]: license.html
 
 
