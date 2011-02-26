@@ -3,6 +3,12 @@ title: SBT Plugins Change Log
 layout: default
 ---
 
+Version 0.3.1:
+
+* The Markdown plugin still uses the Showdown Javascript Markdown parser,
+  but the host domain (`attacklab.net`) is offline. Switched to use a
+  copy cached in the `sbt-plugins` GitHub downloads area.
+
 Version 0.3:
 
 * Now published to the [Scala Tools Maven repository][], which [SBT][]
@@ -25,8 +31,8 @@ Version 0.2.1:
 * Internal changes to the [IzPack plugin][] to use `map()` calls instead of
   `for` and `yield`.
 
-[IzPack plugin]: http://bmc.github.com/sbt-plugins/izpack.html
-[Markdown plugin]: http://bmc.github.com/sbt-plugins/markdown.html
+[IzPack plugin]: http://software.clapper.org/sbt-plugins/izpack.html
+[IzPack plugin]: http://software.clapper.org/sbt-plugins/markdown.html
 
 Version 0.2:
 
@@ -35,7 +41,7 @@ Version 0.2:
 * Web pages now exist for each plugin, including a comprehensive one
   for the IzPack plugin.
 
-[IzPack plugin]: http://bmc.github.com/sbt-plugins/izpack.html
+[IzPack plugin]: http://software.clapper.org/sbt-plugins/izpack.html
 
 Version 0.1:
 

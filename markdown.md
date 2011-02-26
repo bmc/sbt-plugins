@@ -27,7 +27,7 @@ In your own project, create a `project/plugins/Plugins.scala` file (if you
 haven't already), and add the following lines, to make the project available
 to your SBT project:
 
-    val markdown = "org.clapper" % "sbt-markdown-plugin" % "0.2.2"
+    val markdown = "org.clapper" % "sbt-markdown-plugin" % "0.3.1"
 
 Replace the version number with the most recent version number of the
 published plugin.
@@ -154,7 +154,7 @@ Here's an example of how you might use this method:
 
 ## Copyrights
 
-* The Markdown SBT plugin is copyright &copy; 2010 Brian M. Clapper.
+* The Markdown SBT plugin is copyright &copy; 2010-2011 Brian M. Clapper.
 * SBT is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.  
 
 ## License

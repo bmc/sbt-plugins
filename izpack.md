@@ -96,7 +96,7 @@ In your SBT project, create a `project/plugins/Plugins.scala` file, if you
 haven't done so already. Then, add the following lines, to make the plugin
 available to your project:
 
-    val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.2.2"
+    val izPackPlugin = "org.clapper" % "sbt-izpack-plugin" % "0.3.1"
 
 Replace the version number with the most recent version number of the
 published plugin.
@@ -1100,7 +1100,7 @@ so that `sbt installer` will build your installer jar file.
 
 ## Copyrights
 
-* The IzPack SBT plugin is copyright &copy; 2010 Brian M. Clapper.
+* The IzPack SBT plugin is copyright &copy; 2010-2011 Brian M. Clapper.
 * IzPack is copyright &copy; 2001-2008 Julien Ponge
 * SBT is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.  
 

@@ -25,7 +25,7 @@ In your own project, create a `project/plugins/Plugins.scala` file (if you
 haven't already), and add the following lines, to make the project available
 to your SBT project:
 
-    val editsource = "org.clapper" % "sbt-editsource-plugin" % "0.3"
+    val editsource = "org.clapper" % "sbt-editsource-plugin" % "0.3.1"
 
 Replace the version number with the most recent version number of the
 published plugin.
@@ -103,7 +103,7 @@ file, as shown here.
 
 ## Copyrights
 
-* The EditSource SBT plugin is copyright &copy; 2010 Brian M. Clapper.
+* The EditSource SBT plugin is copyright &copy; 2010-2011 Brian M. Clapper.
 * SBT is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.  
 
 ## License

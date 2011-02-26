@@ -59,7 +59,7 @@ Consult the [Markdown plugin][] page for complete details.
 
 ## Copyrights
 
-* These plugins are copyright &copy; 2010 Brian M. Clapper.
+* These plugins are copyright &copy; 2010-2011 Brian M. Clapper.
 * [SBT][] is copyright &copy; 2008, 2009 Mark Harrah, Nathan Hamblen.
 
 ## License
