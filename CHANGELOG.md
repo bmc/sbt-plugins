@@ -32,7 +32,7 @@ Version 0.2.1:
   `for` and `yield`.
 
 [IzPack plugin]: http://software.clapper.org/sbt-plugins/izpack.html
-[IzPack plugin]: http://software.clapper.org/sbt-plugins/markdown.html
+[Markdown plugin]: http://software.clapper.org/sbt-plugins/markdown.html
 
 Version 0.2:
 
