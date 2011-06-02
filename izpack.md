@@ -122,6 +122,7 @@ Windows.
 This part's easy: Just mix it in:
 
     import sbt._
+    import org.clapper.sbtplugins.IzPackPlugin
 
     class MyProject(info: ProjectInfo)
     extends DefaultProject(info) with IzPackPlugin
