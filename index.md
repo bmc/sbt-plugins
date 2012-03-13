@@ -5,10 +5,12 @@ layout: default
 
 ## Introduction
 
-This repository contains various plugins for the [SBT][] build tool. Each
+This repository contains various plugins for the 0.7 version of the [SBT][] build tool. Each
 subdirectory within the repository is its own SBT project. See the `README.md`
 file in each plugin's directory for details on the plugin. Some, but not all,
 of the plugins have their own pages here.
+
+<p style="color: red; font-weight: bold">NOTE: These plugins are no longer maintained. Please see <a href="http://software.clapper.org/sbt-editsource">sbt-editsource</a>,  <a href="http://software.clapper.org/sbt-izpack">sbt-izpack</a>, and <a href="http://software.clapper.org/sbt-lwm">sbt-lwm</a>, instead.</p>
 
 [SBT]: http://code.google.com/p/simple-build-tool/
 
